@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8">
+	<title>Vimeo Upload</title>
+</head>
+<body>
+---- socorro
+<div id="resp"></div>
+++++
+
+<video width="400" controls>
+	<source src="mov_bbb.mp4" id="video_here">
+	  Your browser does not support HTML5 video.
+  </video>
+  
+  <input type="file" name="file[]" class="file_multi_video" accept="video/*">
+</body>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+
+	var client_id = "650638a545f61d482fc89344a441c6634c4ab756";
+	var client_secret = "p2aOtl1zpm2GqFucMbIoaaxpSt6L5YSGTkEIrRudwpnyR0XfygMyjI06CEHWFomzUkFQaLR/LyXSgoMy/UeHwvuNH99irgPtmpty/sAAiNoRMyJ6LdIQ4wASYQ+4vbjR";
+	var access_token = "basic " + btoa(client_id + ":" + client_secret);
+	var redirect = "http://wiki-lab.herokuapp.com/upload/index.php"
+	var link = `https://api.vimeo.com/oauth/authorize?client_id=${client_id}&response_type=token&redirect_uri=${redirect}&state=abc123`
+	console.log(link)
+$(document).on("change", ".file_multi_video", function(evt) {
+	var $source = $('#video_here');
+	$source[0].src = URL.createObjectURL(this.files[0]);
+	var video = URL.createObjectURL(this.files[0]);
+	$source.parent()[0].load();
+	fetch(link, { // Your POST endpoint
+			method: 'POST',
+			headers: {
+				'Authorization' : 'basic '+ access_token,
+				'Content-Type':'application/json',
+				
+			},
+			mode: 'no-cors'
+			//body: video // This is the content of your file
+		}).then(
+			response => response.json() // if the response is a JSON object
+		).then(
+			success => console.log(success) // Handle the success response object
+		).catch(
+			error => console.log(error)  // Handle the error response object
+		);
+});
+	$( document ).ready(function() {
+		
+		//console.log(access_token);
+		
+		
+		// $.ajax({
+		// 	url: 'https://api.vimeo.com/oauth/authorize?client_id=650638a545f61d482fc89344a441c6634c4ab756&response_type=code&redirect_uri=https://wiki-lab.herokuapp.com/upload&state=abcx123',
+		// 	type: 'GET',
+		// 	beforeSend: function (xhr) {
+		// 	    xhr.setRequestHeader('Authorization', 'bearer '+ access_token);
+		// 	    xhr.setRequestHeader('Content-Type', 'application/json');
+		// 	},
+		// 	headers: {
+		// 	        'Authorization':'bearer '+ access_token,
+		// 	        'Content-Type':'application/json'
+		// 	    },
+		// 		data: {client_id: "650638a545f61d482fc89344a441c6634c4ab756",
+		// 			response_type: "code",
+		// 			state: "abcx123",
+		// 			redirect_uri: "https://wiki-lab.herokuapp.com/upload"},
+		// 	success: function (resp) { 
+		// 		console.log(resp); 
+		// 		$("#resp").html(resp); 
+		// 	},
+		// 	error: function (resp) {
+		// 		console.log(resp); 
+		// 		$("#resp").html(resp);
+		// 	},
+		// });
+
+		/* $.post("https://api.vimeo.com/oauth/authorize?client_id=650638a545f61d482fc89344a441c6634c4ab756&response_type=code&redirect_uri=https://devinhas-sp.herokuapp.com/vimeo/api&state=abc123", {client_id: "650638a545f61d482fc89344a441c6634c4ab756"}, function(result){
+	        $("#resp").html(result);
+	    });*/
+	});
+
+
+
+
+
+</script>
+</html>

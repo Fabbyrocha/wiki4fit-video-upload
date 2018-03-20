@@ -1,0 +1,54 @@
+<!doctype html>
+<html ng-app="vimeoApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.7/angular.min.js"></script>
+    <title>Vimeo</title>
+  </head>
+  <body>
+    <h2>Todo</h2>
+    <div ng-controller="vimeoController as todoList">
+ 
+      
+      <form ng-submit="todoList.addTodo()">
+        <input type="text" ng-model="todoList.todoText"  size="30"
+               placeholder="add new todo here">
+        <input class="btn-primary" type="submit" value="add">
+      </form>
+    </div>
+  </body>
+  <script type="text/javascript">
+    angular.module('vimeoApp', [])
+      .controller('vimeoController', function($http) {
+        var todoList = this;
+
+     
+        todoList.addTodo = function () {
+          var client_id = "650638a545f61d482fc89344a441c6634c4ab756";
+          var client_secret = "p2aOtl1zpm2GqFucMbIoaaxpSt6L5YSGTkEIrRudwpnyR0XfygMyjI06CEHWFomzUkFQaLR/LyXSgoMy/UeHwvuNH99irgPtmpty/sAAiNoRMyJ6LdIQ4wASYQ+4vbjR";
+
+          var access_token = "basic " + btoa(client_id + ":" + client_secret);
+          console.log(access_token);
+            alert("foi");
+              $http({
+                  url: 'https://api.vimeo.com/oauth/authorize?client_id=650638a545f61d482fc89344a441c6634c4ab756&response_type=code&redirect_uri=https://devinhas-sp.herokuapp.com/vimeo/api&state=abcx123',
+                  method: "POST",
+                  data: {},
+                  headers: { 'Authorization':'bearer '+ access_token,
+                'Content-Type':'application/json' }
+              }).then(function (response) {
+                  // success
+                  console.log('success');
+                  console.log("then : " + JSON.stringify(response));
+              }, function (response) { // optional
+                  // failed
+                  console.log('failed');
+                  console.log(JSON.stringify(response));
+              });
+          };
+       
+       
+      });    
+
+
+  </script>
+</html>

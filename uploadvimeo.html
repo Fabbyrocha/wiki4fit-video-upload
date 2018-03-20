@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Fazer Upload do meu video no vimeo</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<form><small>(Use esses nomes para os videos 1234abcd.mp4 / abcd1234.mp4 / test.mp4)</small>
+<br>
+	Nome:<input type="text" id="nome">
+	ID:<input type="text" id="id_video">
+	Descricao:<input type="text" id="desc">
+	<input type="button" value="enviar" id="enviar">
+</form>
+<small>aqui vai aparecer o ID do video no Vimeo</small>
+<div id="response"></div>
+</body>
+<script type="text/javascript">
+
+	$("#enviar").on('click', function(){
+		alert("vai salvar seu video , aguarde resspostttttttt");
+		$.post( "upload_video.php", { video_name: $("#nome").val(), id_video: $("#id_video").val(), desc_video: $("#desc").val() })
+		  .done(function( data ) {
+		    $("#response").html( data );
+		  });
+	});
+	
+
+</script>
+</html>

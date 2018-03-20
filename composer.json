@@ -1,0 +1,14 @@
+{
+    "name": "daniel/utube",
+    "authors": [
+        {
+            "name": "Daniel Medeiros",
+            "email": "danielmmf@gmail.com"
+        }
+    ],
+    "require": {
+    	"google/apiclient": "^2.0",
+        "vimeo/vimeo-api":"*"
+    }
+}
+
